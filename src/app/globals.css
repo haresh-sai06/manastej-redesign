@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #051311;
+  --color-deep: #0a211e;
+  --color-pine: #0f2f2b;
+  --color-teal: #2a8f85;
+  --color-teal-2: #3db8ad;
+  --color-mint: #56d4cf;
+  --color-mist: #9dc4be;
+  --color-sage: #4c6f69;
+  --color-foam: #e8f6f4;
+  --color-cream: #f4faf8;
+  --color-radiance: #f2c46d;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-deva: var(--font-deva), var(--font-instrument), serif;
+}
+
+html { background: var(--color-ink); color-scheme: dark; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body {
+  background: var(--color-ink);
+  color: var(--color-foam);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection { background: var(--color-mint); color: var(--color-ink); }
+
+:focus-visible { outline: 2px solid var(--color-mint); outline-offset: 4px; border-radius: 6px; }
+
+.grain::after {
+  content: ""; position: fixed; inset: -50%; pointer-events: none; z-index: 60; opacity: .06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.eyebrow { font-size: .72rem; letter-spacing: .28em; text-transform: uppercase; font-weight: 600; }
+
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+  border: 1px solid rgba(157,196,190,.16);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+}
+.glass-light {
+  background: rgba(255,255,255,.62);
+  border: 1px solid rgba(42,143,133,.16);
+  box-shadow: 0 30px 60px -30px rgba(10,33,30,.25), inset 0 1px 0 #fff;
+}
+
+.text-outline { color: transparent; -webkit-text-stroke: 1px rgba(157,196,190,.35); }
+
+.marquee { display: flex; width: max-content; animation: marquee 38s linear infinite; }
+.marquee.rev { animation-direction: reverse; }
+@keyframes marquee { to { transform: translate3d(-50%,0,0); } }
+
+@keyframes breathe { 0%,100% { transform: scale(.82); opacity: .55 } 50% { transform: scale(1); opacity: 1 } }
+@keyframes floaty { 0%,100% { transform: translate3d(0,0,0) rotate(0) } 50% { transform: translate3d(0,-14px,0) rotate(6deg) } }
+@keyframes spin-slow { to { transform: rotate(360deg) } }
+@keyframes draw { to { stroke-dashoffset: 0 } }
+@keyframes pulse-dot { 0%,100% { box-shadow: 0 0 0 0 rgba(86,212,207,.6) } 50% { box-shadow: 0 0 0 8px rgba(86,212,207,0) } }
+
+.anim-breathe { animation: breathe 6s ease-in-out infinite; }
+.anim-floaty { animation: floaty 9s ease-in-out infinite; }
+.anim-spin { animation: spin-slow 60s linear infinite; }
+.pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
+
+/* Pre-JS state for hero intro, removed by JS. Without JS or with reduced motion, content stays visible. */
+.js-motion [data-intro] { opacity: 0; transform: translate3d(0,40px,0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  .js-motion [data-intro] { opacity: 1; transform: none; }
+}
+
+/* Pinned-scene layout variants (only applied while motion is allowed) */
+.pb-pinned .pb-stage { height: 100svh; }
+.pb-pinned .pb-stage > div:last-child { padding-top: 0; padding-bottom: 0; }
+.pb-pinned .pb-beat2 { grid-row-start: 1; margin-top: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  #home { height: auto; }
+  #home > .sticky { position: relative; height: auto; min-height: 100svh; }
+  #home .hero-copy { height: 100svh; }
+  #home .hero-quote { position: relative; opacity: 1; padding: 4rem 1.5rem 6rem; }
+}
+
+/* Horizontal feature track: stacked by default, horizontal when motion is on */
+@media (min-width: 768px) { .hz-track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .hz-intro { grid-column: 1 / -1; } }
+.hz-on .hz-stage { height: 100svh; }
+.hz-on .hz-track { display: flex; flex-direction: row; height: 100%; width: max-content; align-items: center; padding: 0 5vw; gap: 2.5vw; }
+.hz-on .hz-intro { width: min(80vw, 520px); grid-column: auto; }
+.hz-on .hz-card { width: min(84vw, 640px); height: min(76svh, 640px); }
+@media (max-width: 767px) { .hz-on .hz-card { height: 74svh; } .hz-on .hz-card .hz-art { height: 34%; } }
+
+/* Technology orbit only when pinned on desktop with motion */
+.tc-on .tc-stage { height: 100svh; }
+.tc-on .tc-stage > div { height: 100%; display: grid; place-items: center; padding-top: 0; padding-bottom: 0; }
+.tc-on .tc-orbit-wrap { display: block; width: 0; height: 0; }
+.tc-on .tc-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0; }
