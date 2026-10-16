@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Instrument_Serif, Tiro_Devanagari_Hindi } from "next/font/google";
+import { Manrope, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
 const instrument = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-instrument", display: "swap" });
-const deva = Tiro_Devanagari_Hindi({ subsets: ["devanagari"], weight: "400", variable: "--font-deva", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -25,7 +24,7 @@ export const viewport: Viewport = { themeColor: "#051311" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${instrument.variable} ${deva.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${manrope.variable} ${instrument.variable}`}>
       <head>
         {/* Hide hero intro elements only when JS + motion are available (avoids invisible content without JS). */}
         <script

@@ -14,7 +14,6 @@
   --color-radiance: #f2c46d;
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
-  --font-deva: var(--font-deva), var(--font-instrument), serif;
 }
 
 html { background: var(--color-ink); color-scheme: dark; }
@@ -70,6 +69,16 @@ body {
 .anim-floaty { animation: floaty 9s ease-in-out infinite; }
 .anim-spin { animation: spin-slow 60s linear infinite; }
 .pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
+
+/* Keep the line pulse separate from the hero's GSAP intro and scroll transforms. */
+.hero-ring-line { border: 1px solid rgba(157,196,190,.18); }
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .hero-ring-line { animation: hero-ring-pulse 10s ease-in-out infinite; }
+}
+@keyframes hero-ring-pulse {
+  0%,100% { transform: scale(.94); opacity: .4; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
 
 /* Pre-JS state for hero intro, removed by JS. Without JS or with reduced motion, content stays visible. */
 .js-motion [data-intro] { opacity: 0; transform: translate3d(0,40px,0); }

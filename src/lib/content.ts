@@ -1,5 +1,5 @@
-// All copy below is taken from the live manastej.com (captured Oct 2026).
-// Nothing here is invented. Gaps are marked TODO.
+// Copy adapted from manastej.com (captured Oct 2026), with English translations.
+// Gaps are marked TODO.
 
 export const nav = [
   { href: "#about", label: "About" },
@@ -18,7 +18,7 @@ export const hero = {
   sub: "AI-Powered Mental Health for Everyone",
   body: "A privacy-first ecosystem connecting individual wellbeing, professional therapy, and organizational insight.",
   quote: "Mental health is not a destination, but a process. Manastej gives you the compass.",
-  tagline: "Jo koi nahi sunta, hum sunte hain.",
+  tagline: "When no one else listens, we do.",
   pillars: ["Personal wellbeing", "Clinical context", "Human connection", "Workplace insight"],
   steps: ["Understand the person", "Reflect every day", "Connect to care", "Support healthier teams"],
 };
@@ -63,7 +63,7 @@ export const features = {
     { tag: "02 / Clinical", title: "Secure Tele-Health Therapy Infrastructure", body: "Encrypted video and voice sessions with session notes and an optional AI-assisted therapist sidebar.", note: "Encryption and AI features require clinical validation before launch." },
     { tag: "03 / Bio", title: "Contactless Stress Detection & Bio-Nudges", body: "Optional passive sensing on supported devices, paired with gentle breathing and grounding micro-resets.", note: "Stress detection is exploratory. Requires informed consent and validation." },
     { tag: "04 / Express", title: "Mind Canvas — Digital Projective Psychology", body: "Drawing and symbolic reflection activities including House-Tree-Person-inspired prompts.", note: "AI interpretations are exploratory, not validated assessments." },
-    { tag: "05 / Connect", title: "Mann Ka Dost — A Friend When You Need One", body: "Peer-support service connecting people with trained listeners. Jo koi nahi sunta, hum sunenge.", note: "Not an emergency service. Escalation to licensed professionals is planned." },
+    { tag: "05 / Connect", title: "A Friend When You Need One", body: "Peer-support service connecting people with trained listeners. When no one else listens, we will.", note: "Not an emergency service. Escalation to licensed professionals is planned." },
     { tag: "06 / Grow", title: "Character Story — Your Mental Journey, Gamified", body: "An opt-in digital persona that grows alongside your reflections and wellbeing journey.", note: "Themes are reflective concepts, not clinical scores." },
   ],
 };
@@ -122,6 +122,5 @@ export const join = {
   title: "We're building it for the world.",
   body: "Manastej is in development. Be among the first to experience it as it moves toward launch.",
   cta: "Contact the team",
-  devanagari: "मनस्तेज",
   closing: "The radiance of the mind.",
 };

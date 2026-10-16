@@ -35,7 +35,7 @@ export function FeatureArt({ i }: { i: number }) {
           <path d="M310 78a12 12 0 1 0 0 .1 M310 92v38 M290 108h40 M310 130l-14 30 M310 130l14 30" stroke="#f2c46d" strokeDasharray="300" strokeDashoffset="300" style={{ animation: "draw 3s .8s ease-out forwards" }} />
         </svg>
       );
-    case 4: // Mann Ka Dost: two conversation bubbles
+    case 4: // Peer support: two conversation bubbles
       return (
         <svg viewBox="0 0 400 200" className={common} aria-hidden="true">
           <path d="M90 60h140a20 20 0 0 1 20 20v30a20 20 0 0 1-20 20h-90l-30 22v-22H90a20 20 0 0 1-20-20V80a20 20 0 0 1 20-20Z" fill="rgba(86,212,207,.12)" stroke="#56d4cf" strokeOpacity=".6" />

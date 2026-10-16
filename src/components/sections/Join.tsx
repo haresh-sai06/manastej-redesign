@@ -8,11 +8,10 @@ export default function Join() {
   const root = useRef<HTMLElement>(null);
   useScene(root, (mm, el) => {
     mm.add(MQ.motion, () => {
-      // Dawn: the radiance orb rises behind the wordmark while layers separate
+      // Dawn: the radiance orb rises while layers separate
       const tl = gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: { trigger: el, start: "top bottom", end: "bottom bottom", scrub: 0.6 } });
       tl.fromTo(".jn-sun", { yPercent: 60, scale: 0.7 }, { yPercent: 0, scale: 1 }, 0)
         .fromTo(".jn-sky", { opacity: 0 }, { opacity: 1 }, 0)
-        .fromTo(".jn-deva", { yPercent: 40, opacity: 0 }, { yPercent: 0, opacity: 1 }, 0.1)
         .fromTo(".jn-copy > *", { y: 80, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.06 }, 0.25)
         .fromTo(".jn-hill-a", { yPercent: 30 }, { yPercent: 0 }, 0)
         .fromTo(".jn-hill-b", { yPercent: 60 }, { yPercent: 0 }, 0);
@@ -35,7 +34,6 @@ export default function Join() {
       <div className="relative min-h-[100svh]">
         <div className="jn-sky absolute inset-0 bg-[linear-gradient(180deg,#051311_0%,#0a211e_40%,#1e6b63_75%,#f2c46d_115%)]" aria-hidden="true" />
         <div className="jn-sun absolute left-1/2 top-[56%] h-[70vmin] w-[70vmin] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,#fff6dc_0%,#f2c46d_30%,rgba(242,196,109,.25)_55%,transparent_70%)]" aria-hidden="true" />
-        <div className="jn-deva pointer-events-none absolute inset-x-0 top-[52%] text-center font-deva text-[26vw] leading-none text-white/10 md:text-[16vw]" aria-hidden="true">{join.devanagari}</div>
         <svg className="jn-hill-a absolute inset-x-0 bottom-0 h-[38%] w-full" viewBox="0 0 1440 400" preserveAspectRatio="none" aria-hidden="true"><path d="M0 220C240 140 420 120 720 190s520 40 720-30V400H0Z" fill="#0f2f2b" /></svg>
         <svg className="jn-hill-b absolute inset-x-0 bottom-0 h-[28%] w-full" viewBox="0 0 1440 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0 160c260 70 520 80 760 20s480-60 680 10V300H0Z" fill="#051311" /></svg>
 
@@ -58,7 +56,7 @@ export default function Join() {
             <span className="grid h-11 w-11 place-items-center rounded-full bg-teal"><Image src="/manastej-mark.webp" alt="" width={30} height={23} /></span>
             <div>
               <p className="font-serif text-2xl text-foam">Manastej</p>
-              <p className="text-xs text-mist">“<span lang="hi">{join.devanagari}</span>” — {join.closing}</p>
+              <p className="text-xs text-mist">{join.closing}</p>
             </div>
           </div>
           <nav aria-label="Footer">

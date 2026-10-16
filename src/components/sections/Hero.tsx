@@ -24,7 +24,7 @@ export default function Hero() {
       // Intro: masked rise
       gsap.to(el.querySelectorAll("[data-intro]"), { opacity: 1, y: 0, duration: 1.4, ease: "expo.out", stagger: 0.09, delay: 0.15 });
       gsap.from(el.querySelector(".hero-mark"), { scale: 0.82, duration: 2.2, ease: "expo.out" });
-      gsap.from(el.querySelectorAll(".ring"), { scale: 0.3, opacity: 0, duration: 2.4, ease: "expo.out", stagger: 0.12 });
+      gsap.from(el.querySelectorAll(".hero-ring"), { scale: 0.3, opacity: 0, duration: 2.4, ease: "expo.out", stagger: 0.12 });
 
       // Pinned multi-layer depth scene (sticky stage inside a 220vh track)
       const tl = gsap.timeline({
@@ -32,8 +32,7 @@ export default function Hero() {
         scrollTrigger: { trigger: el, start: "top top", end: "bottom bottom", scrub: 0.6 },
       });
       tl.to(".layer-aurora", { yPercent: -12, scale: 1.15 }, 0)
-        .to(".layer-deva", { yPercent: -40, opacity: 0.9 }, 0)
-        .to(".ring", { scale: (i) => 1.6 + i * 0.35, opacity: 0, stagger: 0.02 }, 0)
+        .to(".hero-ring", { scale: (i) => 1.6 + i * 0.35, opacity: 0, stagger: 0.02 }, 0)
         .to(".hero-mark", { scale: 2.4, yPercent: -10, opacity: 0 }, 0)
         .to(".hero-copy", { yPercent: -60, opacity: 0 }, 0)
         .to(".leaf", { y: (i) => -260 * leaves[i].d, rotate: (i) => leaves[i].r + 140, ease: "none" }, 0)
@@ -67,20 +66,18 @@ export default function Hero() {
           <div className="absolute -left-[10%] top-[10%] h-[50vmax] w-[50vmax] rounded-full bg-[radial-gradient(circle,rgba(86,212,207,.18),transparent_65%)]" />
           <div className="absolute -right-[15%] bottom-[-10%] h-[55vmax] w-[55vmax] rounded-full bg-[radial-gradient(circle,rgba(242,196,109,.12),transparent_60%)]" />
         </div>
-        {/* L1 Devanagari wordmark */}
-        <div className="layer-deva pointer-events-none absolute inset-x-0 top-[66%] text-center opacity-40" aria-hidden="true">
-          <div data-depth="0.2" className="font-deva text-outline whitespace-nowrap text-[30vw] leading-none md:text-[22vw]">मनस्तेज</div>
-        </div>
         {/* L2 radiance rings */}
-        <div className="pointer-events-none absolute inset-x-0 top-[30%] grid place-items-center md:top-[31%]" aria-hidden="true">
+        <div className="hero-rings pointer-events-none absolute inset-x-0 top-[31%] hidden place-items-center md:grid" aria-hidden="true">
           <div data-depth="0.4" className="relative grid place-items-center">
             {[0, 1, 2, 3].map((i) => (
-              <span key={i} className="ring absolute rounded-full border border-mint/10" style={{ width: `${30 + i * 18}vmin`, height: `${30 + i * 18}vmin` }} />
+              <span key={i} className="hero-ring absolute" style={{ width: `${30 + i * 18}vmin`, height: `${30 + i * 18}vmin` }}>
+                <span className="hero-ring-line absolute inset-0 rounded-full" style={{ animationDuration: `${10 + i * 2}s`, animationDelay: `${i * -2.5}s` }} />
+              </span>
             ))}
           </div>
         </div>
         {/* L3 brain mark */}
-        <div className="pointer-events-none absolute inset-x-0 top-[30%] grid -translate-y-1/2 place-items-center md:top-[31%]" aria-hidden="true">
+        <div className="pointer-events-none absolute inset-x-0 top-[24%] grid -translate-y-1/2 place-items-center md:top-[calc(31%-3rem)]" aria-hidden="true">
           <div data-depth="0.7" className="hero-mark relative">
             <div className="anim-breathe absolute inset-[-40%] rounded-full bg-[radial-gradient(circle,rgba(86,212,207,.35),transparent_62%)]" />
             <Image src="/manastej-mark.webp" alt="" width={400} height={308} priority className="relative w-[46vw] max-w-[300px] opacity-95 md:w-[26vmin] drop-shadow-[0_0_40px_rgba(86,212,207,.45)]" />
@@ -97,17 +94,19 @@ export default function Hero() {
 
         {/* Copy */}
         <div className="hero-copy relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-end px-5 pb-[9vh] text-center md:pb-[11vh]">
-          <p data-intro className="eyebrow mb-4 hidden items-center gap-2 text-mist md:inline-flex">
-            <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-mint" /> {hero.eyebrow}
-          </p>
-          <h1 className="font-serif text-[21vw] leading-[0.85] tracking-[-0.03em] text-foam md:text-[8.5rem]">
-            <span data-intro className="inline-block">Manas</span>
-            <span data-intro className="inline-block italic text-mint">tej</span>
-          </h1>
-          <p data-intro className="mt-5 max-w-2xl text-balance text-lg text-foam/90 md:text-2xl">{hero.title}</p>
-          <p data-intro className="mt-3 max-w-xl text-pretty text-sm text-mist md:text-base">
-            <strong className="font-semibold text-foam">{hero.sub}.</strong> {hero.body}
-          </p>
+          <div className="hero-message absolute inset-x-5 bottom-[calc(34%+1rem)] flex flex-col items-center md:contents">
+            <p data-intro className="eyebrow mb-4 hidden items-center gap-2 text-mist md:inline-flex">
+              <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-mint" /> {hero.eyebrow}
+            </p>
+            <h1 className="font-serif text-[21vw] leading-[0.85] tracking-[-0.03em] text-foam md:text-[8.5rem]">
+              <span data-intro className="inline-block">Manas</span>
+              <span data-intro className="inline-block italic text-mint">tej</span>
+            </h1>
+            <p data-intro className="mt-5 max-w-2xl text-balance text-lg text-foam/90 md:text-2xl">{hero.title}</p>
+            <p data-intro className="mt-3 max-w-xl text-pretty text-sm text-mist md:text-base">
+              <strong className="font-semibold text-foam">{hero.sub}.</strong> {hero.body}
+            </p>
+          </div>
           <div data-intro className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a href="#about" className="rounded-full bg-mint px-6 py-3 text-sm font-semibold text-ink transition-transform hover:scale-[1.04]">Explore Manastej ↗</a>
             <a href="#organizations" className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-foam transition-colors hover:bg-white/5">For HR ↗</a>

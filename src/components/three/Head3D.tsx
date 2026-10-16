@@ -1,10 +1,18 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
-import { onStartChange } from "@/lib/headState";
+import { Component, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { headState, onStartChange } from "@/lib/headState";
 
 const loadScene = () => import("./HeadScene");
 const HeadScene = dynamic(loadScene, { ssr: false });
+
+class SceneBoundary extends Component<{ children: ReactNode; onError: () => void }, { failed: boolean }> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch() { this.props.onError(); }
+  render() { return this.state.failed ? null : this.props.children; }
+}
 
 function webglOK() {
   try {
@@ -23,16 +31,17 @@ const DOME = "M118 205C122 120 190 70 262 68C352 66 410 130 408 215C406 262 380 
 function Placeholder({ hidden, still }: { hidden: boolean; still: boolean }) {
   return (
     <div aria-hidden="true" className={`pointer-events-none absolute inset-0 transition-opacity duration-700 ${hidden ? "opacity-0" : "opacity-100"}`}>
-      <div className="absolute inset-[-25%] rounded-full bg-[radial-gradient(closest-side,rgba(79,179,234,.30),rgba(42,143,133,.16)_55%,transparent_75%)] blur-xl" />
+      <div className="absolute inset-[-25%] rounded-full bg-[radial-gradient(closest-side,rgba(134,158,103,.24),rgba(92,125,94,.12)_55%,transparent_75%)] blur-xl" />
       <svg viewBox="0 0 495 604" className={`relative h-full w-full ${still ? "" : "animate-[headPulse_2.4s_ease-in-out_infinite]"}`} fill="none">
         <defs>
           <linearGradient id="hp-stroke" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#4fb3ea" />
-            <stop offset="1" stopColor="#2a8f85" stopOpacity="0" />
+            <stop offset="0" stopColor="#8fa78d" />
+            <stop offset="1" stopColor="#5c7d5e" stopOpacity="0" />
           </linearGradient>
         </defs>
         <path d={PROFILE} stroke="url(#hp-stroke)" strokeWidth="2.5" strokeLinecap="round" />
-        <path d={DOME} stroke="#e8a0b6" strokeOpacity=".55" strokeWidth="2" />
+        <path d={DOME} stroke="#81955e" strokeOpacity=".55" strokeWidth="2" />
+        <path d="M194 237C161 214 163 174 196 160C223 183 218 217 194 237ZM253 207C225 179 235 133 270 122C290 152 280 187 253 207ZM313 244C284 216 302 175 340 170C352 204 339 230 313 244ZM240 284C258 324 250 388 268 451M256 356C239 338 227 343 231 359C238 371 249 370 256 356M258 399C277 375 291 381 282 397C275 407 265 408 258 399" stroke="#81955e" strokeOpacity=".45" strokeWidth="2" strokeLinecap="round" />
       </svg>
     </div>
   );
@@ -40,46 +49,87 @@ function Placeholder({ hidden, still }: { hidden: boolean; still: boolean }) {
 
 /**
  * Glass head slot. A soft glow + line-drawing placeholder holds the space; the WebGL head is
- * preloaded right after first paint (idle) and cross-fades in as it starts spinning in.
- * Reduced motion / no WebGL: a pre-rendered still of the same 3D head.
+ * preloaded right after first paint (idle) and cross-fades in as its entrance starts.
+ * Reduced motion / unavailable WebGL: a matching botanical still.
  */
 export default function Head3D() {
   const ref = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<"pending" | "3d" | "static">("pending");
   const [enabled, setEnabled] = useState(false); // 3D bundle + models requested
   const [active, setActive] = useState(false); // render loop running
-  const [shown, setShown] = useState(false); // spin-in has started
+  const [shown, setShown] = useState(false); // entrance has started
+  const failed = useRef(false);
+
+  const showStill = useCallback(() => {
+    failed.current = true;
+    setActive(false);
+    setMode("static");
+  }, []);
 
   useEffect(() => {
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches || !webglOK()) { setMode("static"); return; }
-    setMode("3d");
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    const supported = webglOK();
+    const syncMode = () => {
+      const still = motion.matches || !supported || failed.current;
+      setMode(still ? "static" : "3d");
+      if (still) setActive(false);
+    };
+    const onContextLost = (event: Event) => {
+      event.preventDefault();
+      showStill();
+    };
+    const el = ref.current!;
+    setShown(headState.started);
+    const off = onStartChange(setShown);
+    syncMode();
+    motion.addEventListener("change", syncMode);
+    // Context loss does not bubble, so capture it from the descendant canvas.
+    el.addEventListener("webglcontextlost", onContextLost, true);
+    return () => {
+      off();
+      motion.removeEventListener("change", syncMode);
+      el.removeEventListener("webglcontextlost", onContextLost, true);
+    };
+  }, [showStill]);
+
+  useEffect(() => {
+    if (mode !== "3d") return;
     const el = ref.current!;
     // Preload after first paint when the browser is idle; or immediately if the section is (or is restored) nearby.
     let alive = true;
+    let inView = false;
+    let idle: number | undefined;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     const go = () => { if (alive) setEnabled(true); };
-    if ("requestIdleCallback" in window) window.requestIdleCallback(go, { timeout: 2500 });
-    else setTimeout(go, 1200);
+    const syncActive = () => { if (alive) setActive(inView && !document.hidden); };
+    if ("requestIdleCallback" in window) idle = window.requestIdleCallback(go, { timeout: 2500 });
+    else timeout = setTimeout(go, 1200);
     const near = new IntersectionObserver(([e]) => { if (e.isIntersecting) { go(); near.disconnect(); } }, { rootMargin: "150% 0px" });
-    const run = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { rootMargin: "20% 0px" });
+    const run = new IntersectionObserver(([e]) => { inView = e.isIntersecting; syncActive(); }, { rootMargin: "20% 0px" });
     near.observe(el); run.observe(el);
-    const off = onStartChange(setShown);
+    document.addEventListener("visibilitychange", syncActive);
     return () => {
       alive = false;
-      near.disconnect(); run.disconnect(); off();
+      if (idle !== undefined) window.cancelIdleCallback(idle);
+      if (timeout !== undefined) clearTimeout(timeout);
+      near.disconnect(); run.disconnect();
+      document.removeEventListener("visibilitychange", syncActive);
     };
-  }, []);
+  }, [mode]);
 
   return (
     <div ref={ref} className="relative aspect-[495/604] w-full">
       {mode === "static" ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src="/head-3d-still.webp" alt="" width={684} height={836} loading="lazy" decoding="async" className="absolute -inset-[20%] h-[140%] w-[140%] max-w-none object-contain" />
+        <img src="/head-botanical-still.webp" alt="" width={1424} height={1672} loading="lazy" decoding="async" className="absolute -inset-[20%] h-[140%] w-[140%] max-w-none object-contain" />
       ) : (
-        <Placeholder hidden={shown} still={false} />
+        <Placeholder hidden={mode === "3d" && enabled && shown} still={false} />
       )}
       {mode === "3d" && enabled && (
         <div className={`absolute -inset-x-[70%] -inset-y-[40%] transition-opacity duration-500 ${shown ? "opacity-100" : "opacity-0"}`} data-head3d>
-          <HeadScene active={active} />
+          <SceneBoundary onError={showStill}>
+            <HeadScene active={active} />
+          </SceneBoundary>
         </div>
       )}
     </div>
