@@ -45,7 +45,7 @@ export default function Head3D() {
         className={`relative h-auto w-full drop-shadow-[0_30px_60px_rgba(42,143,133,.35)] transition-opacity duration-300 ${ready ? "opacity-0" : "opacity-100"}`}
       />
       {enabled && (
-        <div className={`absolute -inset-x-[70%] -inset-y-[40%] transition-opacity duration-300 ${ready ? "opacity-100" : "opacity-0"}`} data-head3d style={{ maskImage: "linear-gradient(to bottom, #000 72%, transparent 92%)", WebkitMaskImage: "linear-gradient(to bottom, #000 72%, transparent 92%)" }}>
+        <div className={`absolute -inset-x-[70%] -inset-y-[40%] transition-opacity duration-300 ${ready ? "opacity-100" : "opacity-0"}`} data-head3d>
           <HeadScene active={active} />
         </div>
       )}

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { mergeGeometries, mergeVertices } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
-// Small deterministic 3D value noise (no deps).
+// Deterministic 3D value noise (no deps).
 function hash(x: number, y: number, z: number) {
   const s = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453;
   return s - Math.floor(s);
@@ -18,41 +18,61 @@ function vnoise(x: number, y: number, z: number) {
     w,
   ) * 2 - 1;
 }
-// Ridged multi-octave noise → sharp sulci between rounded gyri
-function folds(x: number, y: number, z: number) {
-  let f = 0, amp = 0.65, fr = 4.2;
-  for (let o = 0; o < 2; o++) {
-    const n = 1 - Math.abs(vnoise(x * fr, y * fr * 1.3, z * fr * 0.8));
-    f += Math.pow(n, 3) * amp;
-    amp *= 0.4; fr *= 2.2;
-  }
-  return f;
+function fbm(x: number, y: number, z: number) {
+  return vnoise(x, y, z) * 0.6 + vnoise(x * 2.1, y * 2.1, z * 2.1) * 0.3 + vnoise(x * 4.3, y * 4.3, z * 4.3) * 0.1;
+}
+/**
+ * Gyri & sulci: zero-set of a domain-warped noise field becomes a network of narrow grooves
+ * (sulci); everything else stays rounded (gyri). Returns groove depth 0..1.
+ */
+function sulci(x: number, y: number, z: number) {
+  const wx = fbm(x * 1.3 + 11, y * 1.3, z * 1.3) * 0.55;
+  const wy = fbm(x * 1.3, y * 1.3 + 23, z * 1.3) * 0.55;
+  const wz = fbm(x * 1.3, y * 1.3, z * 1.3 + 37) * 0.55;
+  const n1 = fbm((x + wx) * 3.4, (y + wy) * 4.2, (z + wz) * 2.9); // big folds
+  const n2 = fbm((x + wx) * 7.5 + 5, (y + wy) * 8.5, (z + wz) * 6.5); // finer folds
+  const g1 = Math.pow(Math.max(0, 1 - Math.abs(n1) * 5.5), 2);
+  const g2 = Math.pow(Math.max(0, 1 - Math.abs(n2) * 7), 2) * 0.55;
+  return Math.min(1, g1 + g2);
 }
 
-function lobe(radius: [number, number, number], detail: number, offsetX: number, depth: number) {
+const PINK = new THREE.Color("#ffb3c6");
+const ROSE = new THREE.Color("#d9587e");
+const DEEP = new THREE.Color("#9c2f55");
+
+function lobe(radius: [number, number, number], detail: number, offsetX: number, depth: number, colorBias = 0) {
   const ico = new THREE.IcosahedronGeometry(1, detail);
   ico.deleteAttribute("normal"); ico.deleteAttribute("uv");
   const g = mergeVertices(ico);
   const p = g.attributes.position as THREE.BufferAttribute;
-  const v = new THREE.Vector3();
+  const col = new Float32Array(p.count * 3);
+  const v = new THREE.Vector3(), c = new THREE.Color();
   for (let i = 0; i < p.count; i++) {
     v.fromBufferAttribute(p, i).normalize();
-    // flatten the medial face of each hemisphere
-    const medial = offsetX !== 0 && Math.sign(v.x) !== Math.sign(offsetX) ? 0.55 : 1;
-    const d = 1 + depth * (folds(v.x + offsetX * 3, v.y, v.z) - 0.35);
+    const medial = offsetX !== 0 && Math.sign(v.x) !== Math.sign(offsetX) ? 0.58 + 0.42 * (1 - Math.abs(v.x)) ** 4 : 1;
+    const s = sulci(v.x + offsetX * 2, v.y, v.z);
+    const d = 1 - depth * s + depth * 0.15 * fbm(v.x * 9, v.y * 9, v.z * 9);
     p.setXYZ(i, v.x * radius[0] * d * medial + offsetX, v.y * radius[1] * d, v.z * radius[2] * d);
+    // pink (top/gyri) → rose (lower) → deep rose in sulci, faking cavity occlusion
+    c.copy(PINK).lerp(ROSE, Math.min(1, Math.max(0, 0.45 - v.y * 0.45 + colorBias)));
+    c.lerp(DEEP, s * 0.75);
+    col.set([c.r, c.g, c.b], i * 3);
   }
+  g.setAttribute("color", new THREE.BufferAttribute(col, 3));
   g.computeVertexNormals();
   return g;
 }
 
-export function createBrainGeometry(detail = 24) {
-  const left = lobe([0.62, 0.78, 1.2], detail, -0.34, 0.12);
-  const right = lobe([0.62, 0.78, 1.2], detail, 0.34, 0.12);
-  const cere = lobe([0.55, 0.32, 0.4], Math.max(8, detail - 10), 0, 0.06);
-  cere.translate(0, -0.62, -0.78);
-  const stem = new THREE.CylinderGeometry(0.16, 0.11, 0.7, 16);
-  stem.rotateX(0.35); stem.translate(0, -0.85, -0.35);
+export function createBrainGeometry(detail = 40) {
+  const left = lobe([0.62, 0.8, 1.22], detail, -0.33, 0.085);
+  const right = lobe([0.62, 0.8, 1.22], detail, 0.33, 0.085);
+  const cere = lobe([0.56, 0.32, 0.42], Math.max(10, detail - 18), 0, 0.05, 0.25);
+  cere.translate(0, -0.6, -0.8);
+  const stem = new THREE.CylinderGeometry(0.17, 0.12, 1.0, 20, 1, true);
   stem.deleteAttribute("uv");
+  const sc = new Float32Array(stem.attributes.position.count * 3);
+  for (let i = 0; i < stem.attributes.position.count; i++) sc.set([ROSE.r, ROSE.g, ROSE.b], i * 3);
+  stem.setAttribute("color", new THREE.BufferAttribute(sc, 3));
+  stem.rotateX(0.3); stem.translate(0, -0.95, -0.3);
   return mergeGeometries([left, right, cere, stem])!;
 }
