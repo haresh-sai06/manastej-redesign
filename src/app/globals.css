@@ -103,3 +103,14 @@ body {
 .tc-on .tc-stage > div { height: 100%; display: grid; place-items: center; padding-top: 0; padding-bottom: 0; }
 .tc-on .tc-orbit-wrap { display: block; width: 0; height: 0; }
 .tc-on .tc-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0; }
+
+/* About: faked 3D head turn (motion only) */
+.ab-3d-on .ab-face, .ab-3d-on .ab-back, .ab-3d-on .ab-shine-mask { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.ab-3d-on .ab-back { display: block; transform: rotateY(180deg); }
+.ab-3d-on .ab-shine-mask {
+  display: block;
+  -webkit-mask: url(/manastej-head.webp) center / 100% 100% no-repeat;
+  mask: url(/manastej-head.webp) center / 100% 100% no-repeat;
+  mix-blend-mode: soft-light;
+}
+.ab-3d-on .ab-head-turn, .ab-3d-on .ab-head-float { will-change: transform; }
