@@ -163,8 +163,8 @@ function GlassHead() {
             </mesh>
           </>
         )}
-        {/* brain fills most of the cranium; stem runs down toward the neck */}
-        <mesh geometry={brainGeo} material={brainMat} position={[0, 0.45, -0.04]} scale={[0.61, 0.67, 0.65]} rotation={[-0.1, 0, 0]} renderOrder={1} />
+        {/* brain sits in the upper cranium with an even ~0.08–0.17 gap to the glass (checked numerically + x-ray views); front lobe above the brow, short stem ends at the skull base */}
+        <mesh geometry={brainGeo} material={brainMat} position={[0, 0.72, 0]} scale={[0.54, 0.5, 0.55]} rotation={[-0.1, 0, 0]} renderOrder={1} />
       </group>
     </group>
   );

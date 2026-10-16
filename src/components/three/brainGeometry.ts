@@ -68,11 +68,11 @@ export function createBrainGeometry(detail = 40) {
   const right = lobe([0.62, 0.8, 1.22], detail, 0.33, 0.085);
   const cere = lobe([0.56, 0.32, 0.42], Math.max(10, detail - 18), 0, 0.05, 0.25);
   cere.translate(0, -0.6, -0.8);
-  const stem = new THREE.CylinderGeometry(0.17, 0.12, 1.0, 20, 1, true);
+  const stem = new THREE.CylinderGeometry(0.17, 0.12, 1.3, 20, 1, true);
   stem.deleteAttribute("uv");
   const sc = new Float32Array(stem.attributes.position.count * 3);
   for (let i = 0; i < stem.attributes.position.count; i++) sc.set([ROSE.r, ROSE.g, ROSE.b], i * 3);
   stem.setAttribute("color", new THREE.BufferAttribute(sc, 3));
-  stem.rotateX(0.3); stem.translate(0, -0.95, -0.3);
+  stem.rotateX(0.3); stem.translate(0, -1.1, -0.3); // short stem: ends at the skull base, not in the neck
   return mergeGeometries([left, right, cere, stem])!;
 }
