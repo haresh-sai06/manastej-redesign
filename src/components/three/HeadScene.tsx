@@ -4,9 +4,12 @@ import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, Environment, Lightformer, MeshTransmissionMaterial, ContactShadows } from "@react-three/drei";
 import { headState, markReady } from "@/lib/headState";
-import { createBrainGeometry } from "./brainGeometry";
 
 const HEAD_URL = "/models/head.glb";
+const BRAIN_URL = "/models/brain.glb";
+// Start fetching both models as soon as this chunk loads (idle-preloaded by Head3D).
+useGLTF.preload(HEAD_URL, false, true);
+useGLTF.preload(BRAIN_URL, false, true);
 const REST_Y = -1.15; // three-quarter profile facing left, like the original artwork
 const CREAM = new THREE.Color("#f4faf8");
 const HEAD_H = 2.6; // normalized head height (scene units, before the 0.7 group scale)
@@ -34,6 +37,30 @@ function useHeadGeometry() {
     const s = HEAD_H / bb.getSize(new THREE.Vector3()).y;
     g.translate(-c.x, -c.y, -c.z).scale(s, s, s);
     // Smooth shading for the shell; the neck cap has its own vertices, so it stays flat and crisp.
+    g.computeVertexNormals();
+    return g;
+  }, [nodes]);
+}
+
+/** CC0 brain mesh (Grab3D), baked cavity colours; origin = top centre, front-back length = 1. */
+function useBrainGeometry() {
+  const { nodes } = useGLTF(BRAIN_URL, false, true) as unknown as { nodes: Record<string, THREE.Mesh> };
+  return useMemo(() => {
+    const mesh = Object.values(nodes).find((n) => (n as THREE.Mesh).isMesh) as THREE.Mesh;
+    const a = mesh.geometry.attributes.position, c = mesh.geometry.attributes.color;
+    const out = new Float32Array(a.count * 3), col = new Float32Array(c.count * 3), tmp = new THREE.Color();
+    for (let i = 0; i < a.count; i++) {
+      out[i * 3] = a.getX(i); out[i * 3 + 1] = a.getY(i); out[i * 3 + 2] = a.getZ(i);
+      // baked colours are sRGB; three expects linear vertex colours
+      tmp.setRGB(c.getX(i), c.getY(i), c.getZ(i), THREE.SRGBColorSpace);
+      col[i * 3] = tmp.r; col[i * 3 + 1] = tmp.g; col[i * 3 + 2] = tmp.b;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(out, 3));
+    g.setAttribute("color", new THREE.BufferAttribute(col, 3));
+    g.setIndex(mesh.geometry.index);
+    mesh.updateWorldMatrix(true, false);
+    g.applyMatrix4(mesh.matrixWorld);
     g.computeVertexNormals();
     return g;
   }, [nodes]);
@@ -77,23 +104,27 @@ const rimMaterial = () =>
 function GlassHead() {
   const headGeo = useHeadGeometry();
   const small = useThree((st) => st.size.width < 500);
-  const brainGeo = useMemo(() => createBrainGeometry(small ? 30 : 40), [small]);
+  const brainGeo = useBrainGeometry();
   const rim = useMemo(rimMaterial, []);
   const brainMat = useMemo(
     () =>
       new THREE.MeshPhysicalMaterial({
+        // opaque soft pink with a glossy, waxy finish like the reference artwork
         vertexColors: true,
-        roughness: 0.38,
+        roughness: 0.45,
         metalness: 0,
-        clearcoat: 0.5,
+        clearcoat: 0.7,
         clearcoatRoughness: 0.3,
-        // sheen + soft emissive approximates subsurface scattering on tissue
-        sheen: 1,
-        sheenColor: new THREE.Color("#ffd2de"),
-        sheenRoughness: 0.35,
-        emissive: new THREE.Color("#c2486f"),
-        emissiveIntensity: 0.18,
-        envMapIntensity: 0.8,
+        sheen: 0.3,
+        sheenColor: new THREE.Color("#ffe1ea"),
+        sheenRoughness: 0.4,
+        emissive: new THREE.Color("#b84a6c"),
+        emissiveIntensity: 0.07,
+        envMapIntensity: 0.6,
+        // drawn after the glass on a cleared depth buffer (see onBeforeRender), so it reads crisp and
+        // saturated instead of washed out by refraction; it sits fully inside the head anyway.
+        transparent: true,
+        opacity: 1,
       }),
     [],
   );
@@ -159,12 +190,14 @@ function GlassHead() {
               />
               {/* child of the glass mesh, so it's hidden during the transmission buffer pass
                   (otherwise its silhouette refracts into the glass as stray "seam" lines) */}
-              <mesh geometry={headGeo} material={rim} renderOrder={3} scale={1.003} />
+              <mesh geometry={headGeo} material={rim} renderOrder={5} scale={1.003} />
             </mesh>
           </>
         )}
-        {/* brain sits in the upper cranium with an even ~0.08–0.17 gap to the glass (checked numerically + x-ray views); front lobe above the brow, short stem ends at the skull base */}
-        <mesh geometry={brainGeo} material={brainMat} position={[0, 0.72, 0]} scale={[0.54, 0.5, 0.55]} rotation={[-0.1, 0, 0]} renderOrder={1} />
+        {/* real brain mesh high in the cranium: top just under the crown, front behind the forehead,
+            even ~0.05–0.08 gap to the glass (checked numerically + x-ray views) */}
+        <mesh geometry={brainGeo} material={brainMat} position={[0, 1.2, -0.02]} scale={1.48} renderOrder={4}
+          onBeforeRender={(gl) => { gl.state.buffers.depth.setMask(true); gl.clearDepth(); }} />
       </group>
     </group>
   );

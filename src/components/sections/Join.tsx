@@ -70,7 +70,8 @@ export default function Join() {
             <p>Where Science Meets the Soul · © 2026</p>
             <p className="mt-1 text-mist/50">
               3D head based on “Human Head Basemesh” by pistachio (
-              <a className="underline hover:text-foam" href="https://opengameart.org/content/2-human-head-basemeshes" rel="noopener noreferrer" target="_blank">OpenGameArt</a>, CC0)
+              <a className="underline hover:text-foam" href="https://opengameart.org/content/2-human-head-basemeshes" rel="noopener noreferrer" target="_blank">OpenGameArt</a>, CC0) · brain: “Human Brain” by{" "}
+              <a className="underline hover:text-foam" href="https://grab3d.com/models/anatomy/human-brain/" rel="noopener noreferrer" target="_blank">Grab3D</a> (CC0)
             </p>
           </div>
         </div>
