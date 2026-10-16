@@ -66,7 +66,13 @@ export default function Join() {
               {nav.map((n) => <li key={n.href}><a href={n.href} className="hover:text-foam">{n.label}</a></li>)}
             </ul>
           </nav>
-          <p className="text-xs text-mist/70">Where Science Meets the Soul · © 2026</p>
+          <div className="text-xs text-mist/70 md:text-right">
+            <p>Where Science Meets the Soul · © 2026</p>
+            <p className="mt-1 text-mist/50">
+              3D head based on “Human Head Basemesh” by pistachio (
+              <a className="underline hover:text-foam" href="https://opengameart.org/content/2-human-head-basemeshes" rel="noopener noreferrer" target="_blank">OpenGameArt</a>, CC0)
+            </p>
+          </div>
         </div>
       </footer>
     </section>
