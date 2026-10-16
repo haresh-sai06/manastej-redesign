@@ -1,9 +1,8 @@
 "use client";
 import { useRef } from "react";
 import { about } from "@/lib/content";
-import { useScene, gsap, ScrollTrigger, MQ, wordReveal, riseIn, depthParallax } from "@/lib/motion";
-import { headState, markEntered, resetIntro } from "@/lib/headState";
-import Head3D from "@/components/three/Head3D";
+import { useScene, gsap, MQ, wordReveal, riseIn, depthParallax } from "@/lib/motion";
+import BrainAnimation from "@/components/BrainAnimation";
 import { Words } from "@/components/Words";
 import { Leaf } from "@/components/Leaf";
 
@@ -27,10 +26,6 @@ export default function About() {
       wordReveal(el);
       riseIn(el);
       depthParallax(el);
-      // WebGL head: spin-in when the stage arrives, then Y-rotation tied to scroll
-      ScrollTrigger.create({ trigger: el.querySelector(".ab-stage"), start: "top 55%", onEnter: markEntered, onLeaveBack: resetIntro });
-      ScrollTrigger.create({ trigger: el, start: "top top", end: "bottom top", scrub: true, onUpdate: (self) => { headState.scroll = self.progress; } });
-      return () => { resetIntro(); headState.scroll = 0; };
     });
   });
 
@@ -49,7 +44,7 @@ export default function About() {
             <div className="ab-gloss -mt-2 pr-2 font-serif text-xl italic text-sage md:text-3xl">“mind”</div>
           </div>
           <div className="ab-head relative z-10 -mx-[3vw] w-[30vw] max-w-[300px] md:-mx-[1.5vw] md:w-[17vw]">
-            <Head3D />
+            <BrainAnimation />
           </div>
           <div className="ab-tej text-left">
             <div className="font-serif text-[15vw] italic leading-none tracking-tight text-teal md:text-[13vw]">Tej</div>
