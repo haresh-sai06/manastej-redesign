@@ -61,10 +61,10 @@ export default function About() {
       {/* After the brain pin ends: soft white → green, then dark green for copy + cards */}
       <div className="ab-after relative bg-ink text-foam">
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,#ffffff_0%,#e8f6f4_28%,#0f2f2b_72%,#051311_100%)]"
+          className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,#ffffff_0%,#e8f6f4_10%,#0f2f2b_45%,#051311_75%)]"
           aria-hidden="true"
         />
-        <div data-parallax-root className="relative mx-auto max-w-6xl px-5 pb-28 pt-16 md:pb-40 md:pt-24">
+        <div data-parallax-root className="relative mx-auto max-w-6xl px-5 pb-28 pt-8 md:pb-40 md:pt-12">
           <p className="max-w-4xl font-serif text-3xl leading-[1.15] text-foam md:text-6xl">
             <Words text={about.body} />
           </p>
