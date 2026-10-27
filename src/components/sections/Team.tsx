@@ -23,26 +23,25 @@ export default function Team() {
                 data-rise
                 className={`grid items-center gap-8 md:grid-cols-2 md:gap-14 ${flip ? "md:[&>*:first-child]:order-2" : ""}`}
               >
-                <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-deep md:aspect-[5/6]">
-                  <Image
-                    src={m.photo}
-                    alt={`Portrait of ${m.name}`}
-                    fill
-                    sizes="(min-width: 768px) 40vw, 100vw"
-                    className="object-cover object-top"
-                  />
-                  {/* Soft edge/corner blend into section deep green */}
+                {/* Soft-edged portrait: thin feather into bg-deep, no hard rounded clip */}
+                <div className="relative aspect-[4/5] md:aspect-[5/6]">
                   <div
-                    className="pointer-events-none absolute inset-0 rounded-[28px]"
+                    className="absolute inset-0"
                     style={{
-                      background: `
-                        radial-gradient(ellipse 78% 72% at 50% 42%, transparent 48%, rgba(10,33,30,0.55) 78%, #0a211e 100%),
-                        linear-gradient(90deg, #0a211e 0%, transparent 14%, transparent 86%, #0a211e 100%),
-                        linear-gradient(180deg, #0a211e 0%, transparent 12%, transparent 88%, #0a211e 100%)
-                      `,
+                      WebkitMaskImage:
+                        "radial-gradient(ellipse 92% 90% at 50% 46%, #000 72%, rgba(0,0,0,0.55) 86%, transparent 100%)",
+                      maskImage:
+                        "radial-gradient(ellipse 92% 90% at 50% 46%, #000 72%, rgba(0,0,0,0.55) 86%, transparent 100%)",
                     }}
-                    aria-hidden="true"
-                  />
+                  >
+                    <Image
+                      src={m.photo}
+                      alt={`Portrait of ${m.name}`}
+                      fill
+                      sizes="(min-width: 768px) 40vw, 100vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
                 </div>
                 <div className={flip ? "md:text-right" : ""}>
                   <h3 className="font-serif text-4xl leading-tight text-foam md:text-5xl">{m.name}</h3>
