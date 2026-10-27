@@ -31,18 +31,23 @@ export default function About() {
 
   return (
     <section id="about" ref={root} aria-labelledby="about-title" className="relative overflow-hidden">
-      {/* White for the pinned Manas / Tej / brain scroll */}
+      {/* White around the brain; lower band fills green so the stage never hard-cuts into ab-after */}
       <div className="ab-stage relative grid h-[100svh] place-items-center overflow-hidden bg-white text-ink">
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(232,246,244,0.9)_0%,rgba(255,255,255,1)_55%)]"
           aria-hidden="true"
         />
-        <div className="ab-halo absolute left-1/2 top-1/2 h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(242,196,109,.28),rgba(86,212,207,.18)_40%,transparent_68%)]" aria-hidden="true" />
+        {/* Fill the empty white under the head with green (matches ab-after) */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[42%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(15,47,43,0.55)_28%,#0f2f2b_58%,#051311_100%)]"
+          aria-hidden="true"
+        />
+        <div className="ab-halo absolute left-1/2 top-1/2 z-[2] h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(242,196,109,.28),rgba(86,212,207,.18)_40%,transparent_68%)]" aria-hidden="true" />
         {[["12%", "20%"], ["80%", "26%"], ["22%", "74%"], ["72%", "78%"]].map(([x, y], i) => (
-          <Leaf key={i} className="ab-leaf absolute h-8 w-8 text-teal/50" style={{ left: x, top: y }} />
+          <Leaf key={i} className="ab-leaf absolute z-[2] h-8 w-8 text-teal/50" style={{ left: x, top: y }} />
         ))}
-        <p className="eyebrow absolute left-1/2 top-24 -translate-x-1/2 whitespace-nowrap text-teal">{about.label}</p>
-        <div className="relative flex w-full items-center justify-center" aria-hidden="true">
+        <p className="eyebrow absolute left-1/2 top-24 z-[3] -translate-x-1/2 whitespace-nowrap text-teal">{about.label}</p>
+        <div className="relative z-[3] flex w-full items-center justify-center" aria-hidden="true">
           <div className="ab-manas text-right">
             <div className="font-serif text-[15vw] leading-none tracking-tight text-pine md:text-[13vw]">Manas</div>
             <div className="ab-gloss -mt-2 pr-2 font-serif text-xl italic text-sage md:text-3xl">“mind”</div>
@@ -58,12 +63,8 @@ export default function About() {
         <h2 id="about-title" className="sr-only">What is Manastej? {about.title}</h2>
       </div>
 
-      {/* After the brain pin ends: soft white → green, then dark green for copy + cards */}
+      {/* Continues the same green after the brain pin ends */}
       <div className="ab-after relative bg-ink text-foam">
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,#ffffff_0%,#e8f6f4_10%,#0f2f2b_45%,#051311_75%)]"
-          aria-hidden="true"
-        />
         <div data-parallax-root className="relative mx-auto max-w-6xl px-5 pb-28 pt-8 md:pb-40 md:pt-12">
           <p className="max-w-4xl font-serif text-3xl leading-[1.15] text-foam md:text-6xl">
             <Words text={about.body} />
