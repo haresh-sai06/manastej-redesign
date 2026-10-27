@@ -37,9 +37,9 @@ export default function About() {
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(232,246,244,0.9)_0%,rgba(255,255,255,1)_55%)]"
           aria-hidden="true"
         />
-        {/* Fill the empty white under the head with green (matches ab-after) */}
+        {/* Shorter green fill under the head; soft into ink with no white seam */}
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[42%] bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(15,47,43,0.55)_28%,#0f2f2b_58%,#051311_100%)]"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[28%] bg-[linear-gradient(180deg,rgba(5,19,17,0)_0%,rgba(15,47,43,0.75)_35%,#0f2f2b_62%,#051311_100%)]"
           aria-hidden="true"
         />
         <div className="ab-halo absolute left-1/2 top-1/2 z-[2] h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(242,196,109,.28),rgba(86,212,207,.18)_40%,transparent_68%)]" aria-hidden="true" />

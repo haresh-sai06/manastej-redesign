@@ -34,29 +34,29 @@ export default function Problem() {
   });
 
   return (
-    <section id="problem" ref={root} aria-labelledby="problem-title" className="relative bg-ink">
+    <section id="problem" ref={root} aria-labelledby="problem-title" className="relative bg-white text-ink">
       <div className="pb-stage relative overflow-hidden">
         <div className="pb-bg pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute left-1/2 top-1/3 h-[70vmax] w-[70vmax] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(15,47,43,.9),transparent_60%)]" />
-          <svg className="absolute inset-0 h-full w-full opacity-[.08]"><defs><pattern id="g" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#9dc4be" strokeWidth=".6" /></pattern></defs><rect width="100%" height="100%" fill="url(#g)" /></svg>
+          <div className="absolute left-1/2 top-1/3 h-[70vmax] w-[70vmax] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(232,246,244,.95),transparent_60%)]" />
+          <svg className="absolute inset-0 h-full w-full opacity-[.12]"><defs><pattern id="g" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#2a8f85" strokeWidth=".6" /></pattern></defs><rect width="100%" height="100%" fill="url(#g)" /></svg>
         </div>
 
         <div className="relative mx-auto grid h-full max-w-6xl px-5 py-24">
           {/* Beat 1: title + stats */}
           <div className="col-start-1 row-start-1 flex flex-col justify-center gap-12">
             <div className="pb-intro">
-              <p className="eyebrow mb-5 text-mint">— {problem.label}</p>
-              <h2 id="problem-title" className="pb-title max-w-4xl font-serif text-5xl leading-[0.95] text-foam md:text-8xl">
+              <p className="eyebrow mb-5 text-teal">— {problem.label}</p>
+              <h2 id="problem-title" className="pb-title max-w-4xl font-serif text-5xl leading-[0.95] text-ink md:text-8xl">
                 <Words text={problem.title} />
               </h2>
-              <p data-rise className="mt-6 max-w-xl text-lg text-mist">{problem.body}</p>
+              <p data-rise className="mt-6 max-w-xl text-lg text-sage">{problem.body}</p>
             </div>
-            <dl className="pb-stats grid grid-cols-2 gap-px overflow-hidden rounded-3xl bg-white/10 md:grid-cols-4">
+            <dl className="pb-stats grid grid-cols-2 gap-px overflow-hidden rounded-3xl bg-teal/10 md:grid-cols-4">
               {problem.stats.map((s) => (
-                <div key={s.label} data-rise className="pb-stat bg-ink/95 p-5 md:p-7">
-                  <dt className="eyebrow text-[10px] text-mist/80">{s.label}</dt>
-                  <dd className="mt-3 font-serif text-5xl text-foam md:text-6xl">{s.value}</dd>
-                  <dd className="mt-1 text-sm text-mist">{s.note}</dd>
+                <div key={s.label} data-rise className="pb-stat bg-white p-5 md:p-7">
+                  <dt className="eyebrow text-[10px] text-sage">{s.label}</dt>
+                  <dd className="mt-3 font-serif text-5xl text-ink md:text-6xl">{s.value}</dd>
+                  <dd className="mt-1 text-sm text-sage">{s.note}</dd>
                 </div>
               ))}
             </dl>
@@ -64,25 +64,21 @@ export default function Problem() {
 
           {/* Beat 2: the three failures */}
           <div className="pb-beat2 col-start-1 row-start-2 mt-16 flex flex-col justify-center">
-            <p data-rise className="pb-fail-label eyebrow mb-8 text-center text-radiance">{problem.failuresLabel}</p>
+            <p data-rise className="pb-fail-label eyebrow mb-8 text-center text-teal">{problem.failuresLabel}</p>
             <div className="grid gap-4 md:grid-cols-3 md:gap-5">
               {problem.failures.map((f, i) => (
-                <article key={f.who} data-rise className="pb-card glass relative overflow-hidden rounded-[28px] p-7 md:min-h-[330px]">
-                  <span className="font-serif text-7xl text-white/10" aria-hidden="true">0{i + 1}</span>
-                  <p className="eyebrow mt-2 text-mint">{f.who}</p>
-                  <h3 className="mt-3 font-serif text-4xl text-foam">{f.title}</h3>
-                  <p className="mt-4 text-[15px] leading-relaxed text-mist">{f.body}</p>
-                  <span className="crack absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 bg-gradient-to-r from-radiance/80 to-transparent md:scale-x-0" aria-hidden="true" />
+                <article key={f.who} data-rise className="pb-card glass-light relative overflow-hidden rounded-[28px] p-7 md:min-h-[330px]">
+                  <span className="font-serif text-7xl text-teal/15" aria-hidden="true">0{i + 1}</span>
+                  <p className="eyebrow mt-2 text-teal">{f.who}</p>
+                  <h3 className="mt-3 font-serif text-4xl text-ink">{f.title}</h3>
+                  <p className="mt-4 text-[15px] leading-relaxed text-sage">{f.body}</p>
+                  <span className="crack absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 bg-gradient-to-r from-teal/80 to-transparent md:scale-x-0" aria-hidden="true" />
                 </article>
               ))}
             </div>
           </div>
         </div>
       </div>
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-white"
-        aria-hidden="true"
-      />
     </section>
   );
 }
