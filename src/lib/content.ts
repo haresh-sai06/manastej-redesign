@@ -140,7 +140,7 @@ export const team = {
       name: "Haresh Sainaath",
       role: "Technical Lead",
       photo: "/team/haresh.webp",
-      bio: "Haresh is a B.E. CSE (AI & ML) student at Sri Krishna College of Technology (SKCT), Coimbatore, and Mobile Application Developer Intern at Manastej. He built Manastej's mobile app from scratch around the brand, from early product and UI flows to app structure and core screens, with a clean, usable experience. He also builds AI and full-stack products, including Win-Clicky and LLM ForgeBot, and has internship experience in software engineering and ML. He is passionate about AI/ML, product craft, and shipping real-world tools.",
+      bio: "Haresh is a technology enthusiast specializing in AI/ML, mobile development, and full-stack engineering. As Technical Lead at Manastej, he brings experience across product design, UI flows, and application architecture for mental wellness technology. With internship experience in software engineering and machine learning, he is passionate about AI/ML, product craft, and creating real-world impact through forward-thinking solutions.",
     },
     {
       name: "Kunal Jaiswal",
