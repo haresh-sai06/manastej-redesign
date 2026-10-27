@@ -11,7 +11,9 @@ export const nav = [
   { href: "#team", label: "Team" },
 ];
 
-export const contactEmail = "contact@manastej.in";
+export const contactEmail = "info@manastej.com";
+export const contactPhone = "9903812807";
+export const contactPhoneHref = "tel:+919903812807";
 
 export const hero = {
   eyebrow: "Manastej — Where Science Meets the Soul",

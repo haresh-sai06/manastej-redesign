@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRef } from "react";
-import { join, contactEmail, nav } from "@/lib/content";
+import { join, contactEmail, contactPhone, contactPhoneHref, nav } from "@/lib/content";
 import { useScene, gsap, MQ } from "@/lib/motion";
 
 export default function Join() {
@@ -46,7 +46,11 @@ export default function Join() {
           <a href={`mailto:${contactEmail}`} className="jn-cta mt-10 inline-flex items-center gap-3 rounded-full bg-foam px-8 py-4 font-semibold text-ink shadow-[0_20px_60px_-15px_rgba(242,196,109,.6)]">
             {join.cta} <span aria-hidden="true">↗</span>
           </a>
-          <p className="mt-4 text-sm font-medium text-ink">{contactEmail}</p>
+          <p className="mt-4 text-sm font-medium text-ink">
+            <a href={`mailto:${contactEmail}`} className="hover:underline">{contactEmail}</a>
+            <span className="mx-2 opacity-40" aria-hidden="true">·</span>
+            <a href={contactPhoneHref} className="hover:underline">{contactPhone}</a>
+          </p>
         </div>
       </div>
 
@@ -65,7 +69,12 @@ export default function Join() {
             </ul>
           </nav>
           <div className="text-xs text-mist/70 md:text-right">
-            <p>Where Science Meets the Soul · © 2026</p>
+            <p>
+              <a href={`mailto:${contactEmail}`} className="hover:text-foam">{contactEmail}</a>
+              <span className="mx-1.5 opacity-40" aria-hidden="true">·</span>
+              <a href={contactPhoneHref} className="hover:text-foam">{contactPhone}</a>
+            </p>
+            <p className="mt-1">Where Science Meets the Soul · © 2026</p>
           </div>
         </div>
       </footer>
