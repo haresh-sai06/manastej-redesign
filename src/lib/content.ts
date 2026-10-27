@@ -3,6 +3,7 @@
 
 export const nav = [
   { href: "#about", label: "About" },
+  { href: "#clinic", label: "Clinic" },
   { href: "#features", label: "Features" },
   { href: "#organizations", label: "For HR" },
   { href: "#privacy", label: "Privacy" },
@@ -149,4 +150,29 @@ export const team = {
       bio: "KJ is a technology enthusiast and emerging innovator specializing in cloud computing, DevOps, and AI-driven solutions. As the Founder and President of the Cloud Innovators Society, KJ has experience in organizing and hosting technology events, including TEDx and AIOUG initiatives, while contributing to marketing, strategic outreach, and industry collaborations. Passionate about innovation, leadership, and business growth, KJ aims to bridge technology and real-world impact through forward-thinking solutions.",
     },
   ],
+};
+
+export const clinic = {
+  eyebrow: "The Online Clinic",
+  title: "An online clinic. Walk out with a prescription.",
+  lead: "Video call a therapist, talk through what is weighing on you, and leave with a clear digital prescription. The same feeling as walking out of a real doctor’s office with a plan in your hand.",
+  video: {
+    hero: { src: "/clinic/clinic-hero.mp4", caption: "A calm session that ends with clarity, not an empty call." },
+    proof: { src: "/clinic/clinic-prescription.mp4", caption: "Your homework, habits, and next visit date, ready to keep." },
+  },
+  problems: [
+    { title: "Saves the therapist’s time", body: "After most calls, therapists lose twenty minutes typing what just happened. Manastej listens in the background and drafts the notes automatically, so the therapist can stay with you instead of the keyboard." },
+    { title: "Gives you real proof and a plan", body: "In a clinic you leave with medicines, exercises, and a next visit date on paper. Online, calls often end and the advice fades. Here you get an official digital prescription with homework, habits to follow, and when to come back." },
+  ],
+  features: [
+    { title: "Book a therapist", body: "Pick a counselor, choose a time, and start a private video or voice session." },
+    { title: "Talk to someone now", body: "Having a hard night? One tap connects you to a trained listener without waiting for an appointment." },
+    { title: "Live session transcripts", body: "While you talk, the conversation becomes text on screen. Nobody has to scramble for notes." },
+    { title: "Automatic doctor’s notes", body: "When the call ends, the therapist gets a clean one-page summary of what you discussed, how you seemed, and what was advised." },
+    { title: "The digital prescription", body: "Your phone holds the clinic paper. A short summary, daily homework such as a few minutes of breathing or a walk, next steps, and a PDF you can download or print anytime.", proof: true },
+    { title: "Daily mood and sleep check-in", body: "Thirty seconds each day. Tap how you slept, how your energy feels, and whether stress is rising." },
+    { title: "Quick stress relievers", body: "One-minute calming audio and breathing guides on your phone when overwhelm hits." },
+    { title: "Privacy and data safety", body: "You decide what stays private between you and your therapist. Phone numbers and emails are hidden automatically for safety." },
+  ],
+  closing: "Care that listens in the room, and leaves you with something you can hold onto after.",
 };
