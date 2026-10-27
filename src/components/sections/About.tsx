@@ -22,7 +22,14 @@ export default function About() {
         .fromTo(".ab-halo", { scale: 0.4, opacity: 0 }, { scale: 1.1, opacity: 1 }, 0.2)
         .fromTo(".ab-gloss", { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.1 }, 0.5)
         .to(".ab-leaf", { y: (i) => -120 - i * 60, rotate: (i) => (i % 2 ? 90 : -90) }, 0)
-        .to(".ab-head", { yPercent: -6 }, 1);
+        .to(".ab-head", { yPercent: -6 }, 1)
+        // Green rises only after the brain settles — lots of white under it at first
+        .fromTo(
+          ".ab-green",
+          { height: "0%", opacity: 0 },
+          { height: "42%", opacity: 1, ease: "power1.inOut" },
+          0.85,
+        );
       wordReveal(el);
       riseIn(el);
       depthParallax(el);
@@ -31,15 +38,15 @@ export default function About() {
 
   return (
     <section id="about" ref={root} aria-labelledby="about-title" className="relative overflow-hidden">
-      {/* White around the brain; lower band fills green so the stage never hard-cuts into ab-after */}
+      {/* White around the brain; green only rises in as you scroll the pin */}
       <div className="ab-stage relative grid h-[100svh] place-items-center overflow-hidden bg-white text-ink">
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(232,246,244,0.9)_0%,rgba(255,255,255,1)_55%)]"
           aria-hidden="true"
         />
-        {/* Shorter green fill under the head; soft into ink with no white seam */}
+        {/* Starts hidden; GSAP grows it on scroll so green only appears after white space under the brain */}
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[28%] bg-[linear-gradient(180deg,rgba(5,19,17,0)_0%,rgba(15,47,43,0.75)_35%,#0f2f2b_62%,#051311_100%)]"
+          className="ab-green pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-0 opacity-0 bg-[linear-gradient(180deg,rgba(5,19,17,0)_0%,rgba(15,47,43,0.75)_35%,#0f2f2b_62%,#051311_100%)]"
           aria-hidden="true"
         />
         <div className="ab-halo absolute left-1/2 top-1/2 z-[2] h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(242,196,109,.28),rgba(86,212,207,.18)_40%,transparent_68%)]" aria-hidden="true" />
