@@ -23,25 +23,15 @@ export default function Team() {
                 data-rise
                 className={`grid items-center gap-8 md:grid-cols-2 md:gap-14 ${flip ? "md:[&>*:first-child]:order-2" : ""}`}
               >
-                {/* Soft-edged portrait: thin feather into bg-deep, no hard rounded clip */}
+                {/* Photos are pre-feathered to transparent edges so they melt into bg-deep */}
                 <div className="relative aspect-[4/5] md:aspect-[5/6]">
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      WebkitMaskImage:
-                        "radial-gradient(ellipse 92% 90% at 50% 46%, #000 72%, rgba(0,0,0,0.55) 86%, transparent 100%)",
-                      maskImage:
-                        "radial-gradient(ellipse 92% 90% at 50% 46%, #000 72%, rgba(0,0,0,0.55) 86%, transparent 100%)",
-                    }}
-                  >
-                    <Image
-                      src={m.photo}
-                      alt={`Portrait of ${m.name}`}
-                      fill
-                      sizes="(min-width: 768px) 40vw, 100vw"
-                      className="object-cover object-top"
-                    />
-                  </div>
+                  <Image
+                    src={m.photo}
+                    alt={`Portrait of ${m.name}`}
+                    fill
+                    sizes="(min-width: 768px) 40vw, 100vw"
+                    className="object-cover object-top"
+                  />
                 </div>
                 <div className={flip ? "md:text-right" : ""}>
                   <h3 className="font-serif text-4xl leading-tight text-foam md:text-5xl">{m.name}</h3>
