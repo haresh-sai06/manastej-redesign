@@ -130,7 +130,12 @@ export const team = {
   label: "Our Team",
   title: "The people behind Manastej",
   members: [
-    { name: "Diya Chakraborty", role: "", photo: "/team/diya.webp", bio: "" },
+    {
+      name: "Daliya Chakraborty",
+      role: "Founder",
+      photo: "/team/daliya.webp",
+      bio: "Daliya Chakraborty is the Founder of Manastej, building an AI-powered mental wellness ecosystem for individuals, therapists, and organizations. She turns complex data into decisions people can act on, with experience across education, people analytics, product, and founder-led execution — including market validation and opportunity sizing for Manastej. An NCC Governor's Silver Medalist and Aspire Leaders Program selectee, she bridges technology and human wellbeing through leadership, analytics, and hands-on building.",
+    },
     {
       name: "Haresh Sainaath",
       role: "Mobile Application Developer Intern",
