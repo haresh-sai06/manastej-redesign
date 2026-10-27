@@ -30,18 +30,18 @@ export default function About() {
   });
 
   return (
-    <section id="about" ref={root} aria-labelledby="about-title" className="relative overflow-hidden bg-white text-ink">
+    <section id="about" ref={root} aria-labelledby="about-title" className="relative overflow-hidden text-ink">
+      {/* Soft handoff: previous dark green → white so the section edge never hard-cuts */}
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(232,246,244,0.95)_0%,rgba(255,255,255,1)_45%,rgba(244,250,248,1)_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#051311_0%,#0a211e_12%,#0f2f2b_22%,#1a4a44_32%,#9dc4be_48%,#e8f6f4_58%,#ffffff_70%,#ffffff_100%)]"
         aria-hidden="true"
       />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink/40 to-transparent" aria-hidden="true" />
       <div className="ab-stage relative grid h-[100svh] place-items-center overflow-hidden">
         <div className="ab-halo absolute left-1/2 top-1/2 h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(242,196,109,.28),rgba(86,212,207,.18)_40%,transparent_68%)]" aria-hidden="true" />
         {[["12%", "20%"], ["80%", "26%"], ["22%", "74%"], ["72%", "78%"]].map(([x, y], i) => (
           <Leaf key={i} className="ab-leaf absolute h-8 w-8 text-teal/50" style={{ left: x, top: y }} />
         ))}
-        <p className="eyebrow absolute left-1/2 top-24 -translate-x-1/2 whitespace-nowrap text-teal">{about.label}</p>
+        <p className="eyebrow absolute left-1/2 top-24 -translate-x-1/2 whitespace-nowrap text-mint">{about.label}</p>
         <div className="relative flex w-full items-center justify-center" aria-hidden="true">
           <div className="ab-manas text-right">
             <div className="font-serif text-[15vw] leading-none tracking-tight text-pine md:text-[13vw]">Manas</div>
