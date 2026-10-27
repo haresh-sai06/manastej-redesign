@@ -132,9 +132,9 @@ export const team = {
   members: [
     {
       name: "Daliya Chakraborty",
-      role: "Founder",
+      role: "Founder & CEO",
       photo: "/team/daliya.webp",
-      bio: "Daliya Chakraborty is the Founder of Manastej, building an AI-powered mental wellness ecosystem for individuals, therapists, and organizations. She turns complex data into decisions people can act on, with experience across education, people analytics, product, and founder-led execution — including market validation and opportunity sizing for Manastej. An NCC Governor's Silver Medalist and Aspire Leaders Program selectee, she bridges technology and human wellbeing through leadership, analytics, and hands-on building.",
+      bio: "A geographer and educator by training, Daliya spent five years inside Indian institutions watching the same crisis play out in every room: students, teachers, and professionals quietly collapsing under pressure that no system was designed to catch. That pattern — invisible distress, lagging data, blunt interventions — became the problem she couldn't stop thinking about. She taught herself to build. Working across Python, Firebase, and Gemini AI, Daliya architected Manastej's core systems herself — the Cognitive Flow Tracker, the session billing engine, the role-based clinical access layer. She understands the user because she has been the user, and she understands institutions because she has worked inside them. No clinical credential means no institutional blind spot. Daliya saw the gap between reactive mental healthcare and the proactive infrastructure organisations actually need precisely because she wasn't trained to accept the status quo. A Governor's Silver Medal NCC cadet who represented West Bengal at Republic Day. The same rigour — mission-driven, structured, built to last — runs through every layer of Manastej. She is also the author of a book, \"How I Built the Hiring Velocity Method,\" with a vision to make the world a better place where every mind matters.",
     },
     {
       name: "Haresh Sainaath",
