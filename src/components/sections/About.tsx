@@ -37,7 +37,7 @@ export default function About() {
   });
 
   return (
-    <section id="about" ref={root} aria-labelledby="about-title" className="relative overflow-hidden">
+    <section id="about" ref={root} aria-labelledby="about-title" className="relative overflow-hidden bg-ink">
       {/* White around the brain; green only rises in as you scroll the pin */}
       <div className="ab-stage relative grid h-[100svh] place-items-center overflow-hidden bg-white text-ink">
         <div
@@ -46,7 +46,7 @@ export default function About() {
         />
         {/* Starts hidden; GSAP grows it on scroll so green only appears after white space under the brain */}
         <div
-          className="ab-green pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-0 opacity-0 bg-[linear-gradient(180deg,rgba(5,19,17,0)_0%,rgba(15,47,43,0.75)_35%,#0f2f2b_62%,#051311_100%)]"
+          className="ab-green pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-0 opacity-0 bg-[linear-gradient(180deg,rgba(5,19,17,0)_0%,rgba(5,19,17,0.55)_28%,#0f2f2b_55%,#051311_100%)]"
           aria-hidden="true"
         />
         <div className="ab-halo absolute left-1/2 top-1/2 z-[2] h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(242,196,109,.28),rgba(86,212,207,.18)_40%,transparent_68%)]" aria-hidden="true" />
@@ -68,10 +68,12 @@ export default function About() {
           </div>
         </div>
         <h2 id="about-title" className="sr-only">What is Manastej? {about.title}</h2>
+        {/* Ink lip at stage bottom — seals the pin join so no white hairline shows */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[3px] bg-ink" aria-hidden="true" />
       </div>
 
-      {/* Continues the same green after the brain pin ends */}
-      <div className="ab-after relative bg-ink text-foam">
+      {/* Continues the same green; slight overlap kills the seam */}
+      <div className="ab-after relative -mt-[3px] bg-ink text-foam">
         <div data-parallax-root className="relative mx-auto max-w-6xl px-5 pb-28 pt-8 md:pb-40 md:pt-12">
           <p className="max-w-4xl font-serif text-3xl leading-[1.15] text-foam md:text-6xl">
             <Words text={about.body} />
