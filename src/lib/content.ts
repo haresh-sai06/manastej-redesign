@@ -152,7 +152,7 @@ export const team = {
       name: "Menka Kashyap",
       role: "Full Stack Developer",
       photo: "/team/menka.webp",
-      bio: "",
+      bio: "Passionate about web development, coding, and learning new technologies. Always eager to build innovative projects, solve problems, and grow my skills.",
     },
   ],
 };
