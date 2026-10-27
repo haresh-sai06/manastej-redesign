@@ -46,7 +46,7 @@ export default function Join() {
           <a href={`mailto:${contactEmail}`} className="jn-cta mt-10 inline-flex items-center gap-3 rounded-full bg-foam px-8 py-4 font-semibold text-ink shadow-[0_20px_60px_-15px_rgba(242,196,109,.6)]">
             {join.cta} <span aria-hidden="true">↗</span>
           </a>
-          <p className="mt-4 text-sm text-mist">{contactEmail}</p>
+          <p className="mt-4 text-sm font-medium text-ink">{contactEmail}</p>
         </div>
       </div>
 
