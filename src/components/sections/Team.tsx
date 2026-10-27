@@ -23,7 +23,7 @@ export default function Team() {
                 data-rise
                 className={`grid items-center gap-8 md:grid-cols-2 md:gap-14 ${flip ? "md:[&>*:first-child]:order-2" : ""}`}
               >
-                {/* 4/5 matches photo — keeps equal soft alpha on all sides (no crop) */}
+                {/* Cutout portraits — transparent bg sits directly on deep green */}
                 <div className="relative aspect-[4/5] w-full max-w-md justify-self-center md:max-w-none md:justify-self-stretch">
                   <Image
                     src={m.photo}
