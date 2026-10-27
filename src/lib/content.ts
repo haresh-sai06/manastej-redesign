@@ -8,6 +8,7 @@ export const nav = [
   { href: "#privacy", label: "Privacy" },
   { href: "#technology", label: "Technology" },
   { href: "#audience", label: "Who It's For" },
+  { href: "#team", label: "Team" },
 ];
 
 export const contactEmail = "contact@manastej.in";
@@ -123,4 +124,24 @@ export const join = {
   body: "Manastej is in development. Be among the first to experience it as it moves toward launch.",
   cta: "Contact the team",
   closing: "The radiance of the mind.",
+};
+
+export const team = {
+  label: "Our Team",
+  title: "The people behind Manastej",
+  members: [
+    { name: "Diya Chakraborty", role: "", photo: "/team/diya.webp", bio: "" },
+    {
+      name: "Haresh Sainaath",
+      role: "Mobile Application Developer Intern",
+      photo: "/team/haresh.webp",
+      bio: "Haresh is a B.E. CSE (AI & ML) student at Sri Krishna College of Technology (SKCT), Coimbatore, and Mobile Application Developer Intern at Manastej. He built Manastej's mobile app from scratch around the brand, from early product and UI flows to app structure and core screens, with a clean, usable experience. He also builds AI and full-stack products, including Win-Clicky and LLM ForgeBot, and has internship experience in software engineering and ML. He is passionate about AI/ML, product craft, and shipping real-world tools.",
+    },
+    {
+      name: "Kunal Jaiswal (KJ)",
+      role: "Founder & President, Cloud Innovators Society",
+      photo: "/team/kunal.webp",
+      bio: "KJ is a technology enthusiast and emerging innovator specializing in cloud computing, DevOps, and AI-driven solutions. As the Founder and President of the Cloud Innovators Society, KJ has experience in organizing and hosting technology events, including TEDx and AIOUG initiatives, while contributing to marketing, strategic outreach, and industry collaborations. Passionate about innovation, leadership, and business growth, KJ aims to bridge technology and real-world impact through forward-thinking solutions.",
+    },
+  ],
 };

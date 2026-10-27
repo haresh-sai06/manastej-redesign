@@ -10,6 +10,7 @@ import Privacy from "@/components/sections/Privacy";
 import Tech from "@/components/sections/Tech";
 import Audience from "@/components/sections/Audience";
 import Join from "@/components/sections/Join";
+import Team from "@/components/sections/Team";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
         <Privacy />
         <Tech />
         <Audience />
+        <Team />
         <Join />
       </main>
     </>
