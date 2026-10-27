@@ -23,14 +23,14 @@ export default function Team() {
                 data-rise
                 className={`grid items-center gap-8 md:grid-cols-2 md:gap-14 ${flip ? "md:[&>*:first-child]:order-2" : ""}`}
               >
-                {/* Photos are pre-feathered to transparent edges so they melt into bg-deep */}
-                <div className="relative aspect-[4/5] md:aspect-[5/6]">
+                {/* 4/5 matches photo — keeps equal soft alpha on all sides (no crop) */}
+                <div className="relative aspect-[4/5] w-full max-w-md justify-self-center md:max-w-none md:justify-self-stretch">
                   <Image
                     src={m.photo}
                     alt={`Portrait of ${m.name}`}
                     fill
                     sizes="(min-width: 768px) 40vw, 100vw"
-                    className="object-cover object-top"
+                    className="object-contain object-center"
                   />
                 </div>
                 <div className={flip ? "md:text-right" : ""}>
