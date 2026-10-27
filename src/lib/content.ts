@@ -143,7 +143,7 @@ export const team = {
       bio: "Haresh is a B.E. CSE (AI & ML) student at Sri Krishna College of Technology (SKCT), Coimbatore, and Mobile Application Developer Intern at Manastej. He built Manastej's mobile app from scratch around the brand, from early product and UI flows to app structure and core screens, with a clean, usable experience. He also builds AI and full-stack products, including Win-Clicky and LLM ForgeBot, and has internship experience in software engineering and ML. He is passionate about AI/ML, product craft, and shipping real-world tools.",
     },
     {
-      name: "Kunal Jaiswal (KJ)",
+      name: "Kunal Jaiswal",
       role: "Marketing & Ops",
       photo: "/team/kunal.webp",
       bio: "KJ is a technology enthusiast and emerging innovator specializing in cloud computing, DevOps, and AI-driven solutions. As the Founder and President of the Cloud Innovators Society, KJ has experience in organizing and hosting technology events, including TEDx and AIOUG initiatives, while contributing to marketing, strategic outreach, and industry collaborations. Passionate about innovation, leadership, and business growth, KJ aims to bridge technology and real-world impact through forward-thinking solutions.",
