@@ -79,6 +79,10 @@ export default function Problem() {
           </div>
         </div>
       </div>
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-white"
+        aria-hidden="true"
+      />
     </section>
   );
 }
