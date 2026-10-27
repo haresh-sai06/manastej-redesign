@@ -4,7 +4,6 @@ import Hero from "@/components/sections/Hero";
 import Marquee from "@/components/sections/Marquee";
 import Problem from "@/components/sections/Problem";
 import About from "@/components/sections/About";
-import Clinic from "@/components/sections/Clinic";
 import Features from "@/components/sections/Features";
 import Orgs from "@/components/sections/Orgs";
 import Privacy from "@/components/sections/Privacy";
@@ -24,7 +23,6 @@ export default function Home() {
         <Marquee />
         <Problem />
         <About />
-        <Clinic />
         <Features />
         <Orgs />
         <Privacy />
