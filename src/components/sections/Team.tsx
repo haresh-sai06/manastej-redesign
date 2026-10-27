@@ -23,13 +23,25 @@ export default function Team() {
                 data-rise
                 className={`grid items-center gap-8 md:grid-cols-2 md:gap-14 ${flip ? "md:[&>*:first-child]:order-2" : ""}`}
               >
-                <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-pine md:aspect-[5/6]">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-deep md:aspect-[5/6]">
                   <Image
                     src={m.photo}
                     alt={`Portrait of ${m.name}`}
                     fill
                     sizes="(min-width: 768px) 40vw, 100vw"
                     className="object-cover object-top"
+                  />
+                  {/* Soft edge/corner blend into section deep green */}
+                  <div
+                    className="pointer-events-none absolute inset-0 rounded-[28px]"
+                    style={{
+                      background: `
+                        radial-gradient(ellipse 78% 72% at 50% 42%, transparent 48%, rgba(10,33,30,0.55) 78%, #0a211e 100%),
+                        linear-gradient(90deg, #0a211e 0%, transparent 14%, transparent 86%, #0a211e 100%),
+                        linear-gradient(180deg, #0a211e 0%, transparent 12%, transparent 88%, #0a211e 100%)
+                      `,
+                    }}
+                    aria-hidden="true"
                   />
                 </div>
                 <div className={flip ? "md:text-right" : ""}>
