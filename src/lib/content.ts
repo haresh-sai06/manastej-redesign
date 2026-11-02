@@ -144,11 +144,5 @@ export const team = {
       photo: "/team/haresh.webp",
       bio: "Haresh is a technology enthusiast specializing in AI/ML, mobile development, and full-stack engineering. As Technical Lead at Manastej, he brings experience across product design, UI flows, and application architecture for mental wellness technology. With internship experience in software engineering and machine learning, he is passionate about AI/ML, product craft, and creating real-world impact through forward-thinking solutions.",
     },
-    {
-      name: "Kunal Jaiswal",
-      role: "Marketing & Ops",
-      photo: "/team/kunal.webp",
-      bio: "KJ is a technology enthusiast and emerging innovator specializing in cloud computing, DevOps, and AI-driven solutions. As the Founder and President of the Cloud Innovators Society, KJ has experience in organizing and hosting technology events, including TEDx and AIOUG initiatives, while contributing to marketing, strategic outreach, and industry collaborations. Passionate about innovation, leadership, and business growth, KJ aims to bridge technology and real-world impact through forward-thinking solutions.",
-    },
   ],
 };
