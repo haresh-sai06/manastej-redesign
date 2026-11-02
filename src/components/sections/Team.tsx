@@ -37,7 +37,7 @@ export default function Team() {
                   <h3 className="font-serif text-4xl leading-tight text-foam md:text-5xl">{m.name}</h3>
                   {m.role && <p className="eyebrow mt-4 text-mint">{m.role}</p>}
                   {m.bio && (
-                    <p className={`mt-5 max-w-xl text-base leading-relaxed text-mist md:text-lg ${flip ? "md:ml-auto" : ""}`}>
+                    <p className={`mt-5 max-w-xl whitespace-pre-line text-base leading-relaxed text-mist md:text-lg ${flip ? "md:ml-auto" : ""}`}>
                       {m.bio}
                     </p>
                   )}
